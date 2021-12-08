@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Beeport
+    </title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="jumbotron">
+              <h1>
+                Beeport LOGIN SCREEn
+              </h1>
+              <p>
+                Beeport is a web application that allows you to create and manage your own personal portfolio.
+              </p>
+              <p>
+                <!-- username password form to log in -->
+                <form onsubmit="signIn(event, this)">
+                  <div class="form-group">
+                    <label for="username">
+                      Username
+                    </label>
+                    <input type="text" class="form-control" name="username" placeholder="Enter Username">
+                  </div>
+                  <div class="form-group">
+                    <label for="password">
+                      Password
+                    </label>
+                    <input type="password" class="form-control" name="password" placeholder="Enter Password">
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Login
+                  </button>
+                </form>
+                <a class="btn btn-success btn-lg" href="/" role="button">
+                  Back
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+  //TOBE moved to user.controller.js
+  function signIn(e, form) {
+    e.preventDefault();
+
+    console.log('E: ', e)
+    var data = {
+      username: form.username.value,
+      password: form.password.value
+    };
+    // use fetch to sign in
+    fetch("/api/auth/signin", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log('RES: ', res)
+      if (res.success) {
+        window.location.href = '/';
+      } else {
+        alert('Invalid username or password');
+      }
+    })
+  }
+  </script>
+</html>

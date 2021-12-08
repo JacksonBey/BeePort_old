@@ -19,6 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const Role = db.role;
+const User = db.user;
+// const { User, Role } = db;
 
 db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Db');
@@ -30,9 +32,17 @@ db.sequelize.sync({force: true}).then(() => {
 
 // simple route
 app.get("/", (req, res) => {
-  // res.json({ message: "Welcome to bezkoder application." });
-  res.sendFile(__dirname +"/client/index.html");
+  res.sendFile(__dirname +"/client/views/index.html");
 });
+
+app.get("/login", (req, res) => {
+  res.sendFile(__dirname +"/client/views/login.html");
+});
+
+app.get("/register", (req, res) => {
+  res.sendFile(__dirname +"/client/views/register.html");
+});
+
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
@@ -62,4 +72,5 @@ function initial() {
     id: 3,
     name: "admin"
   });
+
 }
