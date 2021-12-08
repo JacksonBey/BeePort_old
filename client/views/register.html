@@ -32,12 +32,12 @@
                     </label>
                     <input type="password" class="form-control" name="password" placeholder="Enter Password">
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label for="role">
                       role
                     </label>
                     <input type="role" class="form-control" name="role" placeholder="admin moderator or user">
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <label for="email">
                       email
@@ -65,24 +65,27 @@
     let data = {
       username: form.username.value,
       password: form.password.value,
-      role: form.role.value,
+      roles: ["user", "moderator"],
       email: form.email.value
 
     };
-    fetch('/api/auth/signup', {
+    fetch("/api/auth/signup", {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body:  JSON.stringify(data)
-    }).then(function(response) {
-      return response.json();
-    }).then(function(data) {
-      console.log(data);
-      if (data.success) {
+    })
+    .then(res =>
+     res.json())
+    .then(res => {
+      console.log('RES: ', res)
+      if (res.success) {
         window.location.href = '/';
       } else {
-        alert(data.message);
+        alert('Invalid username or password');
       }
     });
-
   }
   </script>
 </html>

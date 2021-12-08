@@ -1,10 +1,10 @@
-function signIn( form) {
-  // e.preventDefault();
-  const { username, password } = form;
+function signIn(e, form) {
+  e.preventDefault();
+  // const { username, password } = form;
   console.log('E: ', e)
   var data = {
-    username: username,
-    password: password
+    username: form.username.value,
+    password: form.password.value
   };
   // use fetch get to sign in
   fetch('/login', {

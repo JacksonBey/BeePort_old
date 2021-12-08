@@ -10,6 +10,7 @@ var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
   // Save User to Database
+  console.log('REQ.BODY', req.body);
   User.create({
     username: req.body.username,
     email: req.body.email,
@@ -25,18 +26,18 @@ exports.signup = (req, res) => {
           }
         }).then(roles => {
           user.setRoles(roles).then(() => {
-            res.send({ message: "User was registered successfully!" });
+            res.send({ message: "User was registered successfully!", success:1 });
           });
         });
       } else {
         // user role = 1
         user.setRoles([1]).then(() => {
-          res.send({ message: "User was registered successfully!" });
+          res.send({ message: "User was registered successfully!", success:1 });
         });
       }
     })
     .catch(err => {
-      res.status(500).send({ message: err.message });
+      res.status(500).send({ message: err.message, success:0 });
     });
 };
 
@@ -48,7 +49,7 @@ exports.signin = (req, res) => {
   })
     .then(user => {
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({ message: "User Not found.", success:0 });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -77,7 +78,8 @@ exports.signin = (req, res) => {
           username: user.username,
           email: user.email,
           roles: authorities,
-          accessToken: token
+          accessToken: token,
+          success:1,
         });
       });
     })
