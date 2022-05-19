@@ -4,6 +4,7 @@ const User = db.user;
 const Role = db.role;
 
 const Op = db.Sequelize.Op;
+// dsfafaf
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
